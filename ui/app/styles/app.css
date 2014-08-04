@@ -1,0 +1,15 @@
+html, body {
+  margin: 20px;
+}
+
+.notifications {
+	list-style: none;
+	margin-left: 0;
+	position: absolute;
+	right: 40px;
+	top: 10px;
+}
+.notification .glyphicon-remove {
+	margin-left: 10px;
+	top: 3px;
+}

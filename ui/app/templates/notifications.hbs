@@ -1,0 +1,10 @@
+{{#if length}}
+  <ul class="notifications">
+    {{#each}}
+      <li {{bind-attr class=":notification :alert type"}} {{action remove this}}>
+        <span class="glyphicon glyphicon-remove pull-right"></span>
+        {{message}}
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}

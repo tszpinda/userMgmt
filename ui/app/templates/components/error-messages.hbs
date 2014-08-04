@@ -1,0 +1,12 @@
+{{#if errors.length}}
+  <div class="alert alert-danger">
+    <h5>There was an error</h5>
+    <ul>
+      {{#each errors.content}}
+        <li>
+          {{string-titleize attribute}} {{message}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}
