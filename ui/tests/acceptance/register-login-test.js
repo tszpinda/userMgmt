@@ -9,8 +9,9 @@ var password = "Password1";
 
 module('Acceptance: RegisterLogin', {
   setup: function() {
+  	window.localStorage.clear();
     App = startApp();
-	 email = "john@" + new Date().getTime() + ".com";
+	email = "john@" + new Date().getTime() + ".com";
   },
   teardown: function() {
     Ember.run(App, 'destroy');
@@ -22,8 +23,8 @@ test('register', function() {
 	expect(2);
 
 	App.testHelpers.registerUser(name, email, password); 
-	andThen(function(){
-   	equal(currentPath(), 'login');
+	andThen(function(){		
+   		equal(currentPath(), 'login');
 	});
 	App.testHelpers.loginUser(email, password); 
 	andThen(function(){

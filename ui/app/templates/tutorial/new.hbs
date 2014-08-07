@@ -1,0 +1,15 @@
+<br/>
+{{#link-to "tutorial" class="btn btn-lg"}}Back{{/link-to}}
+<br/>
+New tutorial
+<form {{action createTutorial on="submit"}} class="form-horizontal" role="form">
+	<div class="form-group">
+    	<label for='name'>Name</label>
+    	{{input value=name id='name' class='form-control'}}
+    	<label for='domain'>Domain</label>
+    	{{input value=domain id='domain' class='form-control'}}
+    	<label for='page'>Page</label>
+    	{{input value=page id='page' class='form-control'}}
+  	</div>
+  	<button type="submit" id="save" class="btn btn-primary">Create tutorial</button>
+</form>

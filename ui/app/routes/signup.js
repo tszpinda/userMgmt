@@ -1,6 +1,6 @@
-import Ember from "ember";
+import UnauthRoute from './unauth';
 
-var SignupRoute = Ember.Route.extend({
+var SignupRoute = UnauthRoute.extend({
 	model: function() {
     	return this.store.createRecord('user');
   	},

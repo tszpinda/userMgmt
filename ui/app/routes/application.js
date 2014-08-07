@@ -8,6 +8,7 @@ the current session, and some of the actions on the route deal with
 handling this
  */
 export default Ember.Route.extend({
+
 	model: function() {
     	return this.store.find('session', 'current');
   	},
@@ -31,22 +32,26 @@ export default Ember.Route.extend({
 
   	actions: {
     	resetSession: function() {
-	    	var _this = this;
-
-	      	this.currentModel.reload().then(function(session) {
+	    	var _this = this;        
+        localStorage.removeItem("authToken");
+        this.currentModel.reload().then(function(session){          
+          console.log('reset session, token removed: ', localStorage.authToken, session.id);
+          _this.transitionTo('login');          
+        });
+	      	/*
+          this.currentModel.reload().then(function(session) {            
 //	      		App.CSRF_TOKEN = session.get('csrfToken');
-				console.log(session);
+				      console.log(session);
 	        	_this.transitionTo('index');
-	      	});
+	      	});*/
     	},
 
     	logout: function() {
       		var _this = this;
-
-      		this.currentModel.set('user', null).save().then(function() {
+          this.currentModel.save().then(function() { 
+            console.log('logout after save', localStorage.authToken);
         		_this.notifier.success("You have been logged out");
-        		//_this.send('resetSession');
-        		_this.transitionTo('login');
+        		_this.send('resetSession');
       		});
     	}
 	}

@@ -1,0 +1,7 @@
+{{#if user}}
+	{{#link-to "tutorial" class="btn btn-lg js-tutorials"}}Tutorials{{/link-to}}
+	<a {{action "logout"}} class="btn btn-lg">Logout({{user.name}})</a>	
+{{else}}
+	{{#link-to "signup" class="btn btn-lg btn-primary"}}Sign Up Now{{/link-to}}
+	{{#link-to "login" class="btn btn-lg"}}Login{{/link-to}}
+{{/if}}

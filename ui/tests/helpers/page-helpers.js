@@ -7,7 +7,7 @@ var pageHelpers = function() {
 	Ember.Test.registerAsyncHelper('loginUser', function (app, email, password) {
 		visit("/login");
 		fillIn("#email", email);	
- 		fillIn("#password", password);
+ 		fillIn("#password", password); 		
  		click("button[type=submit]");
 	});
 

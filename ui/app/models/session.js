@@ -6,12 +6,10 @@ regardless of whether a user has logged in or not)
  */
 import DS from "ember-data";
 
-var Session = DS.Model.extend({
+export default DS.Model.extend({
   email:      DS.attr('string'),
   password:   DS.attr('string'),
   authToken:  DS.attr('string'),
-  user:       DS.belongsTo('user'),
-  csrfToken:  DS.attr('string')
+  csrfToken:  DS.attr('string'),
+  user:       DS.belongsTo('user', {embedded: true, async: false})
 });
-
-export default Session;

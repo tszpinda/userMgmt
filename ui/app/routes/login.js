@@ -1,6 +1,7 @@
-import Ember from 'ember';
+//import Ember from 'ember';
+import UnauthRoute from './unauth';
 
-export default Ember.Route.extend({
+export default UnauthRoute.extend({
 	/*
     The LoginRoute shares the model of the ApplicationRoute, which is
     the current session
@@ -12,11 +13,13 @@ export default Ember.Route.extend({
   		login: function() {
   			var _this = this;
   			this.currentModel.get('errors').clear();
+        localStorage.removeItem("authToken");
 
   			this.currentModel.save().then(function(session){
-  				console.log(session);
+          console.log("Logged in: ok");
   				localStorage.authToken = session.get('authToken');
-  				session.set('authToken', null);
+  				//session.set('authToken', null);
+          //alert(session.get('user').get('name'));
   				/*The CSRF_TOKEN changes when the session is reset */
 //  				App.CSRF_TOKEN = session.get('csrfToken');
 
@@ -30,7 +33,8 @@ export default Ember.Route.extend({
 	        	}else{	        		
 		        	_this.transitionTo('dashboard');
 		        }
-  			}, function(){				
+  			}, function(error){				
+          console.log("Unable to login", error);
   				_this.notifier.error("Login failed");
   			});
   		}

@@ -33,6 +33,10 @@ func (this UserStore) FindUserByEmail(email string) (u *User, _ error) {
 	return u, this.Db.C(userCollection).Find(bson.M{"email": email}).One(&u)
 }
 
+func (this UserStore) FindUserById(id string) (u *User, _ error) {
+	return u, this.Db.C(userCollection).Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&u)
+}
+
 func (this UserStore) UpdateUser(id, email, name string) error {
 	upd := bson.M{"email": email, "name": name}
 	return this.updateById(id, upd)

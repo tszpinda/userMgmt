@@ -3,6 +3,7 @@ package store
 import (
 	"crypto/rand"
 	"crypto/sha1"
+	"strconv"
 
 	"fmt"
 	"io"
@@ -15,10 +16,10 @@ import (
 const sessionCollection = "sessionCollection"
 
 type Session struct {
-	MId       bson.ObjectId `json:"_" bson:"_id"`
-	Id        string        `json:"id" bson:"_"`
+	MId       bson.ObjectId `json:"-" bson:"_id"`
+	Id        string        `json:"id" bson:"-"`
 	AuthToken string        `json:"authToken" bson:"authToken"`
-	UserId    bson.ObjectId `json:"_" bson:"userId"`
+	UserId    bson.ObjectId `json:"user" bson:"userId"`
 }
 
 type SessionStore struct {
@@ -32,12 +33,22 @@ func (this SessionStore) CreateAuthSession(userIdHex string) *Session {
 	return &s
 }
 
-func (this SessionStore) FindSessionByAuthToken(db *mgo.Database, token string) (s *Session, _ error) {
+func (this SessionStore) FindSessionByAuthToken(token string) (s *Session, _ error) {
 	return s, this.Db.C(sessionCollection).Find(bson.M{"authToken": token}).One(&s)
 }
+func (this SessionStore) DeleteSessionByAuthToken(token string) error {
+	return this.Db.C(sessionCollection).Remove(bson.M{"authToken": token})
+}
+
+var i = 0
 
 // newUUID generates a random UUID according to RFC 4122
 func generateAuthToken() string {
+	if true == true {
+		i++
+		return strconv.Itoa(i)
+	}
+
 	uuid := make([]byte, 16)
 	io.ReadFull(rand.Reader, uuid)
 	// variant bits; see section 4.1.1

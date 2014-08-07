@@ -1,6 +1,11 @@
 import Ember from "ember";
 import DS from "ember-data";
 
+Ember.$.ajaxPrefilter(function( options, oriOptions, jqXHR ) {
+     console.log('setting up auth-token', localStorage.authToken);
+     jqXHR.setRequestHeader("auth-token",  localStorage.authToken);
+});
+
 export default DS.RESTAdapter.extend({
 	host: 'http://localhost:3000',
 	ajaxError: function(jqXHR) {
@@ -12,9 +17,15 @@ export default DS.RESTAdapter.extend({
         } else {
         	return error;
         }
-    },
-    headers: Ember.computed(function(){
+  },
+  /*
+  headers: Ember.computed(function(){
   		var token = localStorage.authToken;
-  		return {"AuthToken": token};
-  	})
+      console.log('Authtoken in header set', token);
+  		return {"Authtoken": token};
+  })
+  headers: {
+    "auth-token" : localStorage.authToken,
+    "Craptoken" : "IAMCRAP"
+  }*/
 });
