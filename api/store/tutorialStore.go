@@ -1,6 +1,8 @@
 package store
 
 import (
+	"log"
+
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 )
@@ -38,19 +40,20 @@ func (this TutorialStore) UpdateTutorial(id, name, page string) error {
 
 func (this TutorialStore) FindTutorialsForPage(apiKey, domain, page string) []Tutorial {
 	r := make([]Tutorial, 0)
-	this.Db.C(tutorialCollection).Find(bson.M{"apiKey": apiKey, "domain": domain, "page": page}).All(&r)
+	this.Db.C(tutorialCollection).Find(bson.M{"apikey": apiKey, "domain": domain, "page": page}).All(&r)
 	return r
 }
 
 func (this TutorialStore) FindTutorials(apiKey, domain string) []Tutorial {
 	r := make([]Tutorial, 0)
-	this.Db.C(tutorialCollection).Find(bson.M{"apiKey": apiKey, "domain": domain}).All(&r)
+	this.Db.C(tutorialCollection).Find(bson.M{"apikey": apiKey, "domain": domain}).All(&r)
 	return r
 }
 
 func (this TutorialStore) FindTutorialsForApiKey(apiKey string) []Tutorial {
 	r := make([]Tutorial, 0)
-	this.Db.C(tutorialCollection).Find(bson.M{"apiKey": apiKey}).All(&r)
+	log.Println("FindTutorialsForApiKey", apiKey)
+	this.Db.C(tutorialCollection).Find(bson.M{"apikey": apiKey}).All(&r)
 	return r
 }
 
