@@ -8,13 +8,20 @@ Router.map(function() {
   this.route('signup');
   this.route('login');  	
   this.route('dashboard');  
-  this.resource('tutorial', { path: 'tutorials' });
+  //this.resource('tutorial', { path: 'tutorials' });
   //this.route('tutorial/edit')
   //this.resource('tutorial/step', { path: 'tutorial/steps/:tutorial/step_id' });
 
 
-  this.resource('tutorial/edit', { path: 'tutorials/:tutorial_id/edit' });
-  this.route('tutorial/new');
+//  this.route('tutorial/new');
+  this.resource('tutorials', function(){
+  	this.route('new');
+
+    this.resource('tutorial', { path: '/:tutorial_id' }, function() {
+      this.route('edit');
+    });
+
+  });
 });
 
 export default Router;
