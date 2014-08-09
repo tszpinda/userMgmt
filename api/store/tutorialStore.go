@@ -33,8 +33,8 @@ func (this TutorialStore) AddTutorial(apiKey, domain, page, name string) *Tutori
 	return &u
 }
 
-func (this TutorialStore) UpdateTutorial(id, name, page string) error {
-	upd := bson.M{"name": name, "page": page}
+func (this TutorialStore) UpdateTutorial(id, domain, name, page string) error {
+	upd := bson.M{"name": name, "page": page, "domain": domain}
 	return this.updateById(id, upd)
 }
 

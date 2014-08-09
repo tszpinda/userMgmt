@@ -2,7 +2,7 @@ import AuthRoute from './auth';
 
 export default AuthRoute.extend({
 	model: function() {
-		console.log("tutorials")
+		console.log("route:tutorials");
 	    /*
 	    We don't want to show organizations in the list until they
 	    are saved to the server

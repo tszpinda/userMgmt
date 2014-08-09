@@ -75,6 +75,11 @@ func main() {
 		"/tutorials",
 		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.AddTutorial))))
 
+	mux.Handle(
+		"PUT",
+		"/tutorials/{id}",
+		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.UpdateTutorial))))
+
 	server := tigertonic.NewServer(":3000", tigertonic.ApacheLogged(tigertonic.WithContext(mux, store.Ctx{})))
 	err := server.ListenAndServe()
 

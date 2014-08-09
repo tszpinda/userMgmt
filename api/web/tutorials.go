@@ -1,9 +1,10 @@
 package web
 
 import (
-	"log"
 	"net/http"
 	"net/url"
+
+	"labix.org/v2/mgo/bson"
 
 	"github.com/tszpinda/goember"
 	"github.com/tszpinda/userMgmt/api/store"
@@ -43,21 +44,36 @@ func (this *TutorialResource) GetForApiKey(url *url.URL, h http.Header, _ interf
 
 func (this *TutorialResource) AddTutorial(url *url.URL, inHeaders http.Header, m map[string]*store.Tutorial, ctx *store.Ctx) (int, http.Header, interface{}, error) {
 	t, _ := m["tutorial"]
-	log.Printf("in:t: %+v", t)
-
 	if valErr := em.Required("name", t.Name); valErr != nil {
 		return em.ValidationResponse(valErr)
 	}
 	if valErr := em.Required("domain", t.Domain); valErr != nil {
 		return em.ValidationResponse(valErr)
 	}
-	if valErr := em.Required("page", t.Page); valErr != nil {
+	//if valErr := em.Required("page", t.Page); valErr != nil {
+	//	return em.ValidationResponse(valErr)
+	//}
+	t = this.TutorialStore.AddTutorial(ctx.ApiKey, t.Domain, t.Page, t.Name)
+	t.ApiKey = ""
+	m["tutorial"] = t
+	return 200, nil, m, nil
+}
+
+func (this *TutorialResource) UpdateTutorial(url *url.URL, inHeaders http.Header, m map[string]*store.Tutorial, ctx *store.Ctx) (int, http.Header, interface{}, error) {
+	id := url.Query().Get("id")
+	t, _ := m["tutorial"]
+	if valErr := em.Required("name", t.Name); valErr != nil {
 		return em.ValidationResponse(valErr)
 	}
-	log.Println(t.Page)
-	t = this.TutorialStore.AddTutorial(ctx.ApiKey, t.Domain, t.Page, t.Name)
-	log.Printf("t: %+v", t)
+	if valErr := em.Required("domain", t.Domain); valErr != nil {
+		return em.ValidationResponse(valErr)
+	}
+	//if valErr := em.Required("page", t.Page); valErr != nil {
+	//	return em.ValidationResponse(valErr)
+	//}
+	this.TutorialStore.UpdateTutorial(id, t.Page, t.Name, t.Domain)
 	t.ApiKey = ""
+	t.Id = bson.ObjectIdHex(id)
 	m["tutorial"] = t
 	return 200, nil, m, nil
 }
