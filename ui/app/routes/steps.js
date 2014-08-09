@@ -6,8 +6,8 @@ export default AuthRoute.extend({
     /*see the hacks file for full explanation */
     //return hasManyHack(this.modelFo
 console.log(this.modelFor('tutorial').get('name'));
-    //return this.modelFor('tutorial').get('steps');
-    return this.hasManyHack(this.modelFor('tutorial'), 'steps');
+    return this.modelFor('tutorial').get('steps');
+    //return this.hasManyHack(this.modelFor('tutorial'), 'steps');
   },
 
   hasManyHack : function(parentRecord, collectionName) {

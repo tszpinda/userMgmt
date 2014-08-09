@@ -9,7 +9,7 @@ security, the server must authenticate all endpoints regardless
 export default Ember.Route.extend({
 	beforeModel: function() {
 		var user = this.modelFor('application').get('user');
-		var loggedIn = user && user.get('name') !== "";
+		var loggedIn = user && user.get('name') !== "" && localStorage.authToken;
 		console.log("loggedIn", loggedIn);
 		if(loggedIn){
 			this.transitionTo('dashboard');			

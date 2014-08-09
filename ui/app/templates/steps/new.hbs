@@ -1,0 +1,13 @@
+<br/>
+{{#link-to "steps" class="btn btn-lg"}}Back{{/link-to}}
+<br/>
+New Step
+<form {{action createStep on="submit"}} class="form-horizontal" role="form">
+	<div class="form-group">
+    	<label for='name'>Selector</label>
+    	{{input value=selector id='selector' class='form-control'}}
+    	<label for='text'>Text</label>
+    	{{input value=text id='text' class='form-control'}}
+  	</div>
+  	<button type="submit" id="save" class="btn btn-primary">Create step</button>
+</form>

@@ -80,6 +80,16 @@ func main() {
 		"/tutorials/{id}",
 		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.UpdateTutorial))))
 
+	mux.Handle(
+		"POST",
+		"/steps",
+		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.AddStep))))
+
+	mux.Handle(
+		"PUT",
+		"/steps/{id}",
+		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.UpdateStep))))
+
 	server := tigertonic.NewServer(":3000", tigertonic.ApacheLogged(tigertonic.WithContext(mux, store.Ctx{})))
 	err := server.ListenAndServe()
 
@@ -106,7 +116,7 @@ func populateCtx(r *http.Request) *store.Ctx {
 		log.Println("user not found:", err)
 		return ctx
 	}
-	log.Println(user)
+	//log.Println("user:", user)
 	tigertonic.Context(r).(*store.Ctx).User = user
 	tigertonic.Context(r).(*store.Ctx).ApiKey = user.Id.Hex()
 	return ctx
