@@ -26,6 +26,19 @@ type Tutorial struct {
 	StepIds *[]string     `json:"steps" bson:"-"`
 }
 
+type TutorialApi struct {
+	Id      string      `json:"id"`
+	Name    string      `json:"name"`
+	ApiKey  string      `json:"apiKey"`
+	Domain  string      `json:"domain"`
+	Page    string      `json:"page"`
+	Options []OptionApi `json:"options"`
+}
+type OptionApi struct {
+	Selector string `json:"element"`
+	Text     string `json:"intro"`
+}
+
 type TutorialStore struct {
 	Db *mgo.Database
 }
@@ -35,7 +48,6 @@ func populateTutorailsStepListId(ts []Tutorial) []Tutorial {
 		ts[i] = *populateStepListId(&t)
 
 	}
-	log.Println("ids:", ts[0].StepIds)
 	return ts
 }
 func populateStepListId(t *Tutorial) *Tutorial {
@@ -54,15 +66,29 @@ func (this TutorialStore) AddTutorial(apiKey, domain, page, name string) *Tutori
 	return populateStepListId(&u)
 }
 
-func (this TutorialStore) UpdateTutorial(id, domain, name, page string) error {
+func (this TutorialStore) UpdateTutorial(id, domain, page, name string) error {
 	upd := bson.M{"name": name, "page": page, "domain": domain}
 	return this.updateById(id, upd)
 }
 
-func (this TutorialStore) FindTutorialsForPage(apiKey, domain, page string) []Tutorial {
+func (this TutorialStore) FindApiTutorials(apiKey, domain, page string) []TutorialApi {
 	r := make([]Tutorial, 0)
+	results := make([]TutorialApi, 0)
 	this.Db.C(tutorialCollection).Find(bson.M{"apikey": apiKey, "domain": domain, "page": page}).All(&r)
-	return populateTutorailsStepListId(r)
+	for _, t := range r {
+		opts := make([]OptionApi, 0)
+		for _, step := range t.Steps {
+			//selector := "document.querySelector('" + step.Selector + "')"
+			selector := step.Selector
+			opt := OptionApi{Selector: selector, Text: step.Text}
+			opts = append(opts, opt)
+		}
+		//	element: document.querySelector('#email'),
+		//	intro: "This is a tooltip."
+		tapi := TutorialApi{Id: t.Id.Hex(), Name: t.Name, ApiKey: t.ApiKey, Domain: t.Domain, Page: t.Page, Options: opts}
+		results = append(results, tapi)
+	}
+	return results
 }
 
 func (this TutorialStore) FindTutorials(apiKey, domain string) []Tutorial {

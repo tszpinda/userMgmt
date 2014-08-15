@@ -20,12 +20,13 @@ func (this *TutorialResource) GetForPage(url *url.URL, h http.Header, _ interfac
 	apiKey := url.Query().Get("apiKey")
 	domain := url.Query().Get("domain")
 	page := url.Query().Get("page")
+	log.Println("GetForPage #################", "api", apiKey, "domain", domain, "page", page)
 
 	if valErr := this.validateReqFields(apiKey, domain, page); valErr != nil {
 		return em.ValidationResponse(valErr)
 	}
 
-	tutorials := this.TutorialStore.FindTutorialsForPage(apiKey, domain, page)
+	tutorials := this.TutorialStore.FindApiTutorials(apiKey, domain, page)
 	m := make(map[string]interface{})
 	m["tutorials"] = tutorials
 	return 200, nil, m, nil
@@ -74,7 +75,7 @@ func (this *TutorialResource) UpdateTutorial(url *url.URL, inHeaders http.Header
 	if valErr := em.Required("domain", t.Domain); valErr != nil {
 		return em.ValidationResponse(valErr)
 	}
-	this.TutorialStore.UpdateTutorial(id, t.Page, t.Name, t.Domain)
+	this.TutorialStore.UpdateTutorial(id, t.Domain, t.Page, t.Name)
 	t.ApiKey = ""
 	t.Id = bson.ObjectIdHex(id)
 	m["tutorial"] = t

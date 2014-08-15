@@ -4,8 +4,8 @@ export default AuthRoute.extend({
 	model: function() {
     	console.log("route:steps:new");
   		var step = this.store.createRecord('step');
-  		step.set('tutorial', this.modelFor('tutorial'))
-  		return step
+  		step.set('tutorial', this.modelFor('tutorial'));
+  		return step;
  	},
 
   actions: {
@@ -13,7 +13,7 @@ export default AuthRoute.extend({
     	var _this = this;
     	var step  = this.currentModel;
      	step.get('errors').clear();
-     	console.log('Adding step with selector', step.get('selector'))
+     	console.log('Adding step with selector', step.get('selector'));
      	//var t = step.get('tutorial');
      	//t.get('steps').add(step)
      	step.save().then(function(model) {

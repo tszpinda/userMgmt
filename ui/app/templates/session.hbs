@@ -1,3 +1,4 @@
+<div {{bind-attr class=":nav :navbar-nav :navbar-right :session user:logged-in:logged-out"}}>
 {{#if user}}
 	{{#link-to "tutorials" class="btn btn-lg js-tutorials"}}Tutorials{{/link-to}}
 	<a {{action "logout"}} class="btn btn-lg">Logout({{user.name}})</a>	
@@ -5,3 +6,4 @@
 	{{#link-to "signup" class="btn btn-lg btn-primary"}}Sign Up Now{{/link-to}}
 	{{#link-to "login" class="btn btn-lg"}}Login{{/link-to}}
 {{/if}}
+</div>

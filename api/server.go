@@ -62,7 +62,7 @@ func main() {
 
 	mux.Handle(
 		"GET",
-		"/tutorials/{apiKey}/{domain}/{page}",
+		"/xtutorials/{apiKey}/{domain}/{page}",
 		cors.Build(tigertonic.Marshaled(tutorialApi.GetForPage)))
 
 	mux.Handle(

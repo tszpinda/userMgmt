@@ -10,7 +10,7 @@ export default UnauthRoute.extend({
     	return this.modelFor('application');
   	},
   	actions : {
-  		login: function() {
+      login: function() {
   			var _this = this;
   			this.currentModel.get('errors').clear();
         localStorage.removeItem("authToken");
