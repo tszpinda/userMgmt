@@ -1,0 +1,22 @@
+body {
+
+}
+
+#tuWin {
+	display: block;
+	border: 1px solid #d6d6d6;
+    border-radius: 2px;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	min-width: 150px;
+	min-height: 50px;
+    padding: 10px;
+}
+
+.tu-active, .tu-selected {
+    outline: rgba(0, 39, 163, 0.25) solid 3px !important;
+}
+.tu-selected {
+    outline: rgba(7, 163, 0, 0.25) solid 3px !important;
+}

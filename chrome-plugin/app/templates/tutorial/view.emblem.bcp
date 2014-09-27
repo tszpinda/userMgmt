@@ -1,0 +1,15 @@
+link-to "tutorials" class="btn btn" | Back
+
+br
+.tut-header 
+	h4 Edit tutorial (tutorial/view)
+
+dl.dl-horizontal
+  dt Name
+  dd {{name}}
+  dt Domain
+  dd {{domain}}
+  dt Page
+  dd {{page}}
+
+=outlet

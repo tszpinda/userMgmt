@@ -2,7 +2,7 @@ import AuthRoute from './auth';
 
 export default AuthRoute.extend({
 	model: function(args) {
-		//alert('route:tutorial');
+		alert('route:tutorial');
 		console.log("route:tutorial", args);
 		return this.store.find('tutorial', args.tutorial_id);
 	},

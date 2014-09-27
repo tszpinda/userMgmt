@@ -14,13 +14,12 @@
   </head>
   <body>
     <script>
-      window.UserMgmtENV = {{ENV}};
-      window.EmberENV = window.UserMgmtENV.EmberENV;
+      window.EmberENV = {{EMBER_ENV}};
     </script>
     <script src="assets/vendor.js"></script>
     <script src="assets/user-mgmt.js"></script>
     <script>
-      window.UserMgmt = require('user-mgmt/app')['default'].create(UserMgmtENV.APP);
+      window.UserMgmt = require('user-mgmt/app')['default'].create({{APP_CONFIG}});
     </script>
   </body>
 </html>

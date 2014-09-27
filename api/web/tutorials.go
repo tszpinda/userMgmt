@@ -16,6 +16,20 @@ type TutorialResource struct {
 	TutorialStore store.TutorialStore
 }
 
+func (this *TutorialResource) GetById(url *url.URL, h http.Header, _ interface{}) (int, http.Header, interface{}, error) {
+	id := url.Query().Get("id")
+	t := this.TutorialStore.FindTutorialById(id)
+	m := make(map[string]interface{})
+	m["tutorial"] = t
+
+	steps := make([]store.Step, 0)
+	for _, s := range t.Steps {
+		steps = append(steps, s)
+	}
+	m["steps"] = steps
+
+	return 200, nil, m, nil
+}
 func (this *TutorialResource) GetForPage(url *url.URL, h http.Header, _ interface{}) (int, http.Header, interface{}, error) {
 	apiKey := url.Query().Get("apiKey")
 	domain := url.Query().Get("domain")
@@ -104,7 +118,7 @@ func (this *TutorialResource) AddStep(url *url.URL, inHeaders http.Header, m map
 	if valErr := em.Required("text", s.Text); valErr != nil {
 		return em.ValidationResponse(valErr)
 	}
-	s = this.TutorialStore.AddStep(s.TutorialId, s.Selector, s.Text)
+	s = this.TutorialStore.AddStep(s.TutorialId, s.Selector, s.Text, s.No)
 	m["step"] = s
 	return 200, nil, m, nil
 }
@@ -119,7 +133,7 @@ func (this *TutorialResource) UpdateStep(url *url.URL, inHeaders http.Header, m 
 		return em.ValidationResponse(valErr)
 	}
 	log.Printf("Updating step: %+v", s)
-	this.TutorialStore.UpdateStep(id, s.Selector, s.Text)
+	this.TutorialStore.UpdateStep(id, s.Selector, s.Text, s.No)
 	s.Id = bson.ObjectIdHex(id)
 	m["step"] = s
 	return 200, nil, m, nil

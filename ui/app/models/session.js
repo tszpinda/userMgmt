@@ -11,5 +11,5 @@ export default DS.Model.extend({
   password:   DS.attr('string'),
   authToken:  DS.attr('string'),
   csrfToken:  DS.attr('string'),
-  user:       DS.belongsTo('user', {embedded: true, async: false})
+  user:       DS.belongsTo('user', {embedded: true, async: true})
 });

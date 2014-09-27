@@ -1,0 +1,5 @@
+if !user
+	link-to "login"
+	  | Login
+
+p Index page

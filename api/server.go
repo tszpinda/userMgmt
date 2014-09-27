@@ -81,6 +81,11 @@ func main() {
 		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.UpdateTutorial))))
 
 	mux.Handle(
+		"GET",
+		"/tutorials/{id}",
+		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.GetById))))
+
+	mux.Handle(
 		"POST",
 		"/steps",
 		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.AddStep))))

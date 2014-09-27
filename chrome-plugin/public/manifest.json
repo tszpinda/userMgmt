@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+
+  "name": "aTutorial app plugin",
+  "description": "Tut plugin",
+  "version": "0.0.4",
+  "icons": {
+    "128": "chrome-icon-lg.png"
+  },
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "bookmarks"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "browser_action": {
+    "default_icon": "chrome-icon.png",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "scripts": ["jquery-1.6.4.js", "background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+        "matches": ["<all_urls>"],
+        "js": ["jquery-1.6.4.js", "selectorator.js"],
+        "css": ["content.css"],
+        "run_at": "document_end",
+        "all_frames": true
+    }
+  ]
+}

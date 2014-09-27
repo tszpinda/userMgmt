@@ -13,6 +13,7 @@ type Step struct {
 	Id         bson.ObjectId `json:"id" bson:"_id"`
 	Text       string        `json:"text"`
 	Selector   string        `json:"selector"`
+	No         int           `json:"no"`
 	TutorialId string        `json:"tutorial" bson:"-"`
 }
 
@@ -110,33 +111,31 @@ func (this TutorialStore) updateById(hexId string, update bson.M) error {
 	return this.Db.C(tutorialCollection).Update(selector, bson.M{"$set": update})
 }
 
-func (this TutorialStore) findTutorialById(hexId string) *Tutorial {
+func (this TutorialStore) FindTutorialById(hexId string) *Tutorial {
 	mId := bson.ObjectIdHex(hexId)
 	t := Tutorial{}
 	this.Db.C(tutorialCollection).FindId(mId).One(&t)
-	return &t
+
+	return populateStepListId(&t)
 }
 
-func (this TutorialStore) AddStep(tutorialId, selector, text string) *Step {
-	t := this.findTutorialById(tutorialId)
-	newStep := Step{Id: bson.NewObjectId(), Selector: selector, Text: text, TutorialId: tutorialId}
+func (this TutorialStore) AddStep(tutorialId, selector, text string, no int) *Step {
+	t := this.FindTutorialById(tutorialId)
+	newStep := Step{Id: bson.NewObjectId(), Selector: selector, Text: text, TutorialId: tutorialId, No: no}
 	t.Steps = append(t.Steps, newStep)
 	this.Db.C(tutorialCollection).UpsertId(t.Id, t)
 	return &newStep
 }
 
-func (this TutorialStore) UpdateStep(stepId, selector, text string) *Step {
+func (this TutorialStore) UpdateStep(stepId, selector, text string, no int) *Step {
 	q := bson.M{"steps": bson.M{"$elemMatch": bson.M{"_id": bson.ObjectIdHex(stepId)}}}
-	rq := bson.M{"$set": bson.M{"steps.$.selector": selector, "steps.$.text": text}}
+	rq := bson.M{"$set": bson.M{"steps.$.selector": selector, "steps.$.text": text, "steps.$.no": no}}
 	err := this.Db.C(tutorialCollection).Update(q, rq)
 
 	if err != nil {
 		panic(err)
 	}
 
-	//t := Tutorial{}
-	//this.Db.C(tutorialCollection).Find(bson.M{"step.$id": bson.ObjectIdHex(stepId)}).One(&t)
-	//log.Println("update step", stepId, t)
-	newStep := Step{Id: bson.ObjectIdHex(stepId), Selector: selector, Text: text}
+	newStep := Step{Id: bson.ObjectIdHex(stepId), Selector: selector, Text: text, No: no}
 	return &newStep
 }

@@ -1,0 +1,12 @@
+if isEditing
+	form.form-inline.editableform.inline submit="save"
+		.control-group.form-group
+			=yield
+			.editable-buttons
+				button.btn.btn-primary.btn-sm.editable-submit type="submit"
+					i.glyphicon.glyphicon-ok
+				button.btn.btn-default.btn-sm.editable-cancel click="toggleEditing"
+					i.glyphicon.glyphicon-remove
+else
+	span.inline click="toggleEditing"
+		=value

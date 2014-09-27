@@ -20,9 +20,13 @@
   <p class="pull-right">
     {{#link-to "recoverPassword"}}Forgotten your password?{{/link-to}}
   </p>
---}}  
-<link rel="stylesheet" href="http://localhost:5000/tooltip.css"></link>
-<script src="http://localhost:5000/tooltip-init-without-jq.js" type="text/javascript"></script> 
-<script src="http://localhost:5000/tooltip.js" type="text/javascript"></script> 
 
+<link rel="stylesheet" href="http://localhost:5000/tooltip.css"></link>
+<script src="http://localhost:5000/tooltip-init-without-jq.js" type="text/javascript"></script>
+ --}}
+
+<script async="false" src="http://localhost:5000/tooltip.js" type="text/javascript"></script>
+<script>
+    tut.init({apiKey:"53e0cae2421aa9e276000001", page:"home.jsp"});
+</script>
 </form>

@@ -1,0 +1,18 @@
+link-to "tutorials" class="btn btn" | Back
+
+br
+.tut-header 
+	h4 Edit tutorial
+
+form submit="updateTutorial" class="form-horizontal" role="form"
+  .form-group
+  	label for="name" Name
+  	=input value=name id="name" class="form-control" placeholder="Name"
+  	label for="domain" Domain
+  	=input value=domain id="domain" class="form-control" placeholder="Domain"
+  	label for="page" Page
+  	=input value=page id="page" class="form-control" placeholder="Page"
+  	br
+  	button.btn.btn-primary.pull-right type="submit" Update
+
+=outlet

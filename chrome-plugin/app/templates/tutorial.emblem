@@ -1,0 +1,36 @@
+link-to "tutorials" class="btn btn-default back" |Back
+
+br
+.tut-header
+	h4 Edit - {{name}}
+
+dl.dl-horizontal
+	dt Name
+	dd {{name}}
+	dt Domain
+	dd {{domain}}
+	dt Page
+	dd {{page}}
+
+table.table
+	thead
+		tr
+			th #
+			th Selector
+			th Text
+			th Action
+	tbody
+		each s in model.steps
+			tr.tut-input
+				td
+					=inline-edit value=s.no onSave="saveStep" onCancel="rollbackStep" item=s
+						=input value=s.no type="number" class="form-control input-sm no" placeholder="No"
+				td
+					=inline-edit value=s.selector onSave="saveStep" onCancel="rollbackStep" item=s
+						=input value=s.selector class="form-control input-sm selector" placeholder="Selector"
+				td
+					=inline-edit value=s.text onSave="saveStep" onCancel="rollbackStep" item=s
+						=input value=s.text class="form-control input-sm text" placeholder="Text"
+				td
+					a click="selectElement s" href="#" Pick element
+=outlet

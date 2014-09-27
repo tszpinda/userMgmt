@@ -1,0 +1,13 @@
+br
+.tut-header
+	h4 Your tutorials
+
+//{{#link-to "tutorials.new" class="btn btn-lg js-add-tutorial"}}Add Tutorial{{/link-to}}
+.container.tut-list
+  .row
+    link-to "tutorials.new" class="btn btn-primary col-xs-12 new-tut"| Add Tutorial
+    each t in model
+      link-to "tutorial.view" t class="btn btn-success col-xs-12" 
+        t.name
+
+== outlet

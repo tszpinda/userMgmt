@@ -1,0 +1,8 @@
+if user
+    .navbar.navbar-default.navbar-static-top role="navigation"
+        .container
+            ul.nav.navbar-nav
+                li
+                    link-to "tutorials" class="pull-left" | Home
+                li
+                    a.pull-right href="#" click="logout" Logout

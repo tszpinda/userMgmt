@@ -1,0 +1,9 @@
+if errors.length
+  div.alert.alert-danger
+    h5 There was an error
+    ul
+      each errors.content
+        li
+          =string-titleize attribute
+          %borf &nbsp;
+          =message
