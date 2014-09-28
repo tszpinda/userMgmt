@@ -36,6 +36,7 @@ export default Ember.Route.extend({
         localStorage.removeItem("authToken");
         this.currentModel.reload().then(function(session){          
           console.log('reset session, token removed: ', localStorage.authToken, session.id);
+          _this.currentModel.set('user', null);
           _this.transitionTo('login');          
         });
 	      	/*
@@ -47,7 +48,7 @@ export default Ember.Route.extend({
     	},
 
     	logout: function() {
-      		var _this = this;
+      	  var _this = this;
           this.currentModel.save().then(function() { 
             console.log('logout after save', localStorage.authToken);
         		_this.notifier.success("You have been logged out");
