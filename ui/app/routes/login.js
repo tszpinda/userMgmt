@@ -31,7 +31,7 @@ export default UnauthRoute.extend({
 	        	if (transition) {
 	        		transition.retry();
 	        	}else{	        		
-		        	_this.transitionTo('dashboard');
+		        	_this.transitionTo('tutorials');
 		        }
   			}, function(error){				
           console.log("Unable to login", error);

@@ -1,9 +1,18 @@
-<br>
-<h4>List of tutorials:</h4>
-
-tutorial template
-API KEY: {{apiKey}}
-<br/>
-{{#link-to "steps" class="btn btn-lg js-add-step"}}Steps{{/link-to}}
+{{tmpl-debug "/tutorial.hbs"}}
 
 {{outlet}}
+
+<div class="panel panel-default code-snipet">
+    <div class="panel-heading">How to start</div>
+    <div class="panel-body">
+        <div class="container-fluid">
+            <pre>
+&lt;script&gt;
+    (function(){function loadScript(e,t){var n=document.createElement(&quot;script&quot;);n.type=&quot;text/javascript&quot;;if(n.readyState){n.onreadystatechange=function(){if(n.readyState==&quot;loaded&quot;||n.readyState==&quot;complete&quot;){n.onreadystatechange=null;t()}}}else{n.onload=function(){t()}}n.src=e;document.getElementsByTagName(&quot;head&quot;)[0].appendChild(n)} loadScript('http://localhost:5000/app.js', function(){
+            TutThem.init({apiKey:&quot;{{apiKey}}&quot;, page:&quot;{{page}}&quot;, user: 'test@gmail.com'});
+    });})();
+&lt;/script&gt;
+            </pre>
+        </div>
+    </div>
+</div>

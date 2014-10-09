@@ -1,16 +1,86 @@
-<br/>
+<div class="panel panel-default tutorial-panel">
+    <div class="panel-heading">Tutorial - {{model.name}}
+        <div class="btn-group pull-right">
+            {{#if isShowingConfirmDelete}}
+                <a href="#" class="btn btn-default btn-sm btnDelTut" {{action "confirmDelete"}}>Cancel</a>
+                <a href="#" class="btn btn-danger btn-sm btnDelTut" {{action "deleteConfirmed"}}>Delete</a>
+            {{else}}
+                {{#if isEditing}}
+                    <button type="submit" id="save" class="btn btn-primary  btn-sm" {{action "updateTutorial"}}>Save</button>
+                {{else}}
+                	  <a href="#" class="btn btn-default btn-sm btnDelTut" {{action "confirmDelete"}}>Delete</a>
+                    <a href="#" class="btn btn-default btn-sm" {{action "toggleEditing"}}>Edit</a>
+                {{/if}}
+                {{#link-to "tutorials" class="btn btn-default btn-sm btn-back"}}Back{{/link-to}}
+            {{/if}}
+        </div>
+    </div>
+    <div class="panel-body">
+        <form {{action updateTutorial on="submit"}} class="form-horizontal narrow" role="form">
+            <div class="row-fluid">
+            <div class="form-group">
+                <label for='name'>Name</label>
+                {{input value=model.name id='name' class='form-control' disabled=isReadOnly}}
+            </div>
+            <div class="form-group">
+                <label for='domain'>Domain</label>
+                {{input value=model.domain id='domain' class='form-control' disabled=isReadOnly}}
+            </div>
+            <div class="form-group">
+                <label for='page'>Page</label>
+                {{input value=model.page id='page' class='form-control' disabled=isReadOnly}}
+            </div>
+                </div>
+        </form>
+    </div>
+</div>
 
-{{#link-to "tutorials" class="btn btn-lg"}}Back{{/link-to}}
-<br/>
-Edit tutorial - {{name}}
-<form {{action updateTutorial on="submit"}} class="form-horizontal" role="form">
-	<div class="form-group">
-    	<label for='name'>Name</label>
-    	{{input value=name id='name' class='form-control'}}
-    	<label for='domain'>Domain</label>
-    	{{input value=domain id='domain' class='form-control'}}
-    	<label for='page'>Page</label>
-    	{{input value=page id='page' class='form-control'}}
-  	</div>
-  	<button type="submit" id="save" class="btn btn-primary">Update tutorial</button>
-</form>
+<div class="panel panel-default signup-panel">
+    <div class="panel-heading">Steps
+        <div class="btn-group pull-right">
+            <a href="#" class="btn btn-default btn-sm js-add-step" {{action "addStep"}}>Add Step</a>
+        </div>
+    </div>
+    <div class="panel-body">
+        {{#if model.steps}}
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Selector</th>
+                        <th>Text</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each step in model.steps}}
+                    <tr class="tut-input">
+                        <td>
+                            {{#inline-edit value=step.no onSave="saveStep" onCancel="rollbackStep" item=step}}
+                                {{input value=step.no id='selector' class='form-control'}}
+                            {{/inline-edit}}
+                        </td>
+                        <td>
+                            {{#inline-edit value=step.selector onSave="saveStep" onCancel="rollbackStep" item=step}}
+                                {{input value=step.selector id='selector' class='form-control'}}
+                            {{/inline-edit}}
+                        </td>
+                        <td>
+                            {{#inline-edit value=step.text onSave="saveStep" onCancel="rollbackStep" item=step}}
+                                {{input value=step.text id='text' class='form-control'}}
+                            {{/inline-edit}}
+                        </td>
+                        <td>
+                            <a href="#" {{action "deleteStep" step}}>
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        {{else}}
+            Oops you have no steps, click above to add some!
+        {{/if}}
+    </div>
+</div>

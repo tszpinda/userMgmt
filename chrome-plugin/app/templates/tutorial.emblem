@@ -12,6 +12,8 @@ dl.dl-horizontal
 	dt Page
 	dd {{page}}
 
+a click="addStep" class="btn btn-default add-button" Add Step
+
 table.table
 	thead
 		tr

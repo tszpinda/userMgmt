@@ -8,5 +8,8 @@ if isEditing
 				button.btn.btn-default.btn-sm.editable-cancel click="toggleEditing"
 					i.glyphicon.glyphicon-remove
 else
-	span.inline click="toggleEditing"
-		=value
+    span.inline click="toggleEditing"
+        if hasValue
+            =value
+        else
+            span.empty title="Click to edit" Empty

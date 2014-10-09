@@ -139,3 +139,16 @@ func (this TutorialStore) UpdateStep(stepId, selector, text string, no int) *Ste
 	newStep := Step{Id: bson.ObjectIdHex(stepId), Selector: selector, Text: text, No: no}
 	return &newStep
 }
+
+func (this TutorialStore) DeleteStep(stepId string) {
+	mId := bson.ObjectIdHex(stepId)
+	q := bson.M{"steps": bson.M{"$elemMatch": bson.M{"_id": mId}}}
+	rq := bson.M{"$pull": bson.M{"steps": bson.M{"_id": mId}}}
+
+	this.Db.C(tutorialCollection).Update(q, rq)
+}
+
+func (this TutorialStore) DeleteTutorial(tutorialId string) {
+	mId := bson.ObjectIdHex(tutorialId)
+	this.Db.C(tutorialCollection).RemoveId(mId)
+}

@@ -1,0 +1,23 @@
+{{#if isEditing}}
+	<form class="form-inline editableform inline" submit="save">
+		<div class="control-group form-group">
+			{{yield}}
+			<div class="editable-buttons">
+				<button class="btn btn-primary btn-sm editable-submit" type="submit" {{action "save"}}>
+					<i class="glyphicon glyphicon-ok"></i>
+                </button>
+                <button class="btn btn-default btn-sm editable-cancel" {{action "toggleEditing"}}>
+					<i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+{{else}}
+	<span class="inline" {{action "toggleEditing"}}>
+        {{#if hasValue}}
+            {{value}}
+        {{else}}
+            <span class="empty" title="Click to edit    ">Empty</span>
+        {{/if}}
+	</span>
+{{/if}}

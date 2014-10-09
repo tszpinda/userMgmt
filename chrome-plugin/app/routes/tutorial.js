@@ -4,8 +4,18 @@ export default AuthRoute.extend({
 	model: function(args) {
 		return this.store.find('tutorial', args.tutorial_id);
 	},
-
+    setupController: function(controller, model) {
+        console.log("route:tutorial:setupController", model, controller);
+        controller.set('model', model);
+    },
 	actions: {
+        addStep:function() {
+            console.log("adding step");
+            var step = this.store.createRecord('step');
+            step.set('tutorial', this.currentModel);
+            //this.currentModel.get('steps').add(step);
+            step.save();
+        },
    		updateTutorial: function() {
     		var _this = this;
      		this.currentModel.get('errors').clear();
@@ -17,13 +27,5 @@ export default AuthRoute.extend({
        			_this.notifier.error("Updating a tutorial failed");
      		});
     	}
-  	},
-    saveStep:function() {
-      alert('saveStep');
-      console.log('saving step');
-    },
-    rollbackStep:function() {
-      alert('rollbackStep');
-      console.log('rollback step');
-    }
+  	}
 });

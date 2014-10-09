@@ -3,12 +3,12 @@ import AuthRoute from '../auth';
 export default AuthRoute.extend({
 	
 	model: function(args) {
-        debugger
+        //debugger
 		console.log("route:view/steps", args.tutorial_id);
 		
 		var viewCntrl = this.controllerFor('tutorial');
 		var model = viewCntrl.get('model');
-		debugger
+		//debugger
 		return model.get('steps');
 		//return this.store.find('tutorial', args.tutorial_id);
 	},

@@ -73,6 +73,31 @@ html, body {
     list-style-type: none;
     padding-left: 0;
 }
-.login-panel, .signup-panel {
+.login-panel, .signup-panel, .tuts-panel, .tutorial-panel, .tutorials-panel {
     margin-top: 20px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.panel-heading .btn-group {
+    margin-top: -5px;
+}
+.panel-heading .btn-back {
+    background-color: #fff;
+    box-shadow: none;
+    border-color: #ccc;
+}
+.btnDelTut {
+    border-right: none;
+}
+.tutorial-panel .panel-heading .btn-back {
+    border-left: none;
+}
+.inline .empty {
+    font-style: italic;
+}
+.code-snipet .panel-body, .code-snipet .container-fluid {
+}
+.code-snipet pre {
 }

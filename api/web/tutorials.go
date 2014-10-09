@@ -112,12 +112,13 @@ func (this *TutorialResource) validateReqFields(apiKey, domain, page string) *em
 func (this *TutorialResource) AddStep(url *url.URL, inHeaders http.Header, m map[string]*store.Step, ctx *store.Ctx) (int, http.Header, interface{}, error) {
 	s, _ := m["step"]
 	log.Printf("Adding step: %+v", s)
-	if valErr := em.Required("selector", s.Selector); valErr != nil {
-		return em.ValidationResponse(valErr)
-	}
-	if valErr := em.Required("text", s.Text); valErr != nil {
-		return em.ValidationResponse(valErr)
-	}
+	/*
+		if valErr := em.Required("selector", s.Selector); valErr != nil {
+			return em.ValidationResponse(valErr)
+		}
+		if valErr := em.Required("text", s.Text); valErr != nil {
+			return em.ValidationResponse(valErr)
+		}*/
 	s = this.TutorialStore.AddStep(s.TutorialId, s.Selector, s.Text, s.No)
 	m["step"] = s
 	return 200, nil, m, nil
@@ -126,15 +127,28 @@ func (this *TutorialResource) AddStep(url *url.URL, inHeaders http.Header, m map
 func (this *TutorialResource) UpdateStep(url *url.URL, inHeaders http.Header, m map[string]*store.Step, ctx *store.Ctx) (int, http.Header, interface{}, error) {
 	id := url.Query().Get("id")
 	s, _ := m["step"]
-	if valErr := em.Required("selector", s.Selector); valErr != nil {
-		return em.ValidationResponse(valErr)
-	}
-	if valErr := em.Required("text", s.Text); valErr != nil {
-		return em.ValidationResponse(valErr)
-	}
+	/*
+		if valErr := em.Required("selector", s.Selector); valErr != nil {
+			return em.ValidationResponse(valErr)
+		}
+		if valErr := em.Required("text", s.Text); valErr != nil {
+			return em.ValidationResponse(valErr)
+		}*/
 	log.Printf("Updating step: %+v", s)
 	this.TutorialStore.UpdateStep(id, s.Selector, s.Text, s.No)
 	s.Id = bson.ObjectIdHex(id)
 	m["step"] = s
 	return 200, nil, m, nil
+}
+
+func (this *TutorialResource) DeleteStep(url *url.URL, inHeaders http.Header, _ interface{}, ctx *store.Ctx) (int, http.Header, interface{}, error) {
+	id := url.Query().Get("id")
+	this.TutorialStore.DeleteStep(id)
+	return 200, nil, nil, nil
+}
+
+func (this *TutorialResource) DeleteTutorial(url *url.URL, inHeaders http.Header, _ interface{}, ctx *store.Ctx) (int, http.Header, interface{}, error) {
+	id := url.Query().Get("id")
+	this.TutorialStore.DeleteTutorial(id)
+	return 200, nil, nil, nil
 }

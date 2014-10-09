@@ -14,7 +14,7 @@ export default AuthRoute.extend({
      	this.currentModel.save().then(function(model) {
           console.log("saved", model.get('name'));
         	//_this.transitionTo('tutorial.edit', model);
-         _this.transitionTo('tutorials');
+         _this.transitionTo('tutorial.edit', _this.currentModel);
      	}, function() {
        	_this.notifier.error("Creating a new tutorial failed");
      	});

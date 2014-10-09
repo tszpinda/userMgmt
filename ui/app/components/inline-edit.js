@@ -2,12 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
+
     hasValue : function() {
         var v = this.get('value');
         if (v === 0){
             return true;
         }
-        return this.get('value');
+      return this.get('value');
     }.property('value'),
 
 	actions: {
@@ -18,8 +19,9 @@ export default Ember.Component.extend({
 		},
 		toggleEditing: function(){
 			console.log('toggleEditing');
-			if(this.get('isEditing'))
-				this.sendAction('onCancel', this.get('item'));
+			if(this.get('isEditing')) {
+                this.sendAction('onCancel', this.get('item'));
+            }
 			this.toggleProperty('isEditing');
 		}
 	}

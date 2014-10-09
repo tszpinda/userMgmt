@@ -1,8 +1,17 @@
-<br>
-Tutorials/Index hbs
-<br>
-<br>
-{{#each}}
-	{{#link-to "tutorial.edit" this}}{{name}}{{/link-to}}<br/>
-{{/each}}
+<div class="panel panel-default tuts-panel">
+    <div class="panel-heading">Tutorials</div>
+    <div class="panel-body">
+        <div class="container-fluid tut-list">
+            <div class="row">
+                {{#link-to "tutorials.new" class="btn btn-primary col-xs-12 new-tut"}}Add Tutorial{{/link-to}}
+                {{#each}}
+                    {{#if name}}
+                        {{#link-to "tutorial.edit" this class="btn btn-success col-xs-12"}}{{name}}{{/link-to}}
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
 {{outlet}}

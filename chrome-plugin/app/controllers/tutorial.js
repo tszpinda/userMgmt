@@ -2,7 +2,8 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-	actions: { 
+	actions: {
+
         saveStep:function(step) {
           console.log('saving step', step.get('text'));
           step.save();
@@ -13,7 +14,6 @@ export default Ember.ObjectController.extend({
         },
         selectElement:function(step) {
           console.log('selectElement', step.get('text'));
-            debugger
           chrome.runtime.sendMessage({selectElement: true,
                                       tutorialId: this.get('model').get('id'),
                                       stepId: step.get('id'),

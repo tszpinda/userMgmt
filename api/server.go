@@ -95,6 +95,16 @@ func main() {
 		"/steps/{id}",
 		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.UpdateStep))))
 
+	mux.Handle(
+		"DELETE",
+		"/steps/{id}",
+		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.DeleteStep))))
+
+	mux.Handle(
+		"DELETE",
+		"/tutorials/{id}",
+		cors.Build(tigertonic.If(authenticatedHandler, tigertonic.Marshaled(tutorialApi.DeleteTutorial))))
+
 	server := tigertonic.NewServer(":3000", tigertonic.ApacheLogged(tigertonic.WithContext(mux, store.Ctx{})))
 	err := server.ListenAndServe()
 
